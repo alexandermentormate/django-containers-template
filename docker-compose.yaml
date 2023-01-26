@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  backend:
+    image: djangoapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: djangoapi
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www/app
+    depends_on:
+      - database
+    networks:
+      - backend-net
+    stdin_open: true
+    tty: true
+
+  database:
+    image: postgres:15-alpine
+    container_name: postgresdb
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=db
+      - POSTGRES_USER=django
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - backend-net
+
+networks:
+  backend-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
