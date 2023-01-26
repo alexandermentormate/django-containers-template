@@ -1,1 +1,1 @@
-# django-containers-template
+# Django Skeleton Project
