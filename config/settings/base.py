@@ -6,12 +6,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 env = environ.Env()
 env.read_env(os.path.join(BASE_DIR, '.env'))
-# import ipdb;  ipdb.set_trace()
+
 if env('ENV') == 'prod':
     from config.settings.production import *
 else:
     from config.settings.local import *
-
 
 SECRET_KEY = env('SECRET_KEY')
 
